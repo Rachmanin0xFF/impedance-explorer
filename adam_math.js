@@ -7,6 +7,18 @@ class Cpl {
         this.im = b;
     }
 }
+function c_one() {
+    return new Cpl(1.0, 0.0);
+}
+function c_i() {
+    return new Cpl(0.0, 1.0);
+}
+function c_infty() {
+    return new Cpl(Infinity, 0.0);
+}
+function c_zero() {
+    return new Cpl(0.0, 0.0);
+}
 function cmod(x) {
     return sqrt(x.re*x.re+x.im*x.im)
 }
@@ -46,5 +58,28 @@ function cpow(z, n) {
     let r = pow(mod(z), n);
     let phi = arg(z);
     return new Cpl(r*cos(n*phi), r*sin(n*phi));
+}
+// Circuit wrappers
+function resistance(value) {
+    return new Cpl(value, 0);
+}
+function reactance(value) {
+    return new Cpl(0, value);
+}
+
+function Z_capacitor(w, C) {
+    return reactance(-1.0/(w*C));
+}
+function Z_inductor(w, L) {
+    return reactance(w*L);
+}
+function Z_resistor(w, R) {
+    return resistance(R);
+}
+function Z_wire() {
+    return c_zero();
+}
+function Z_open() {
+    return c_infty();
 }
 // Matrices (TODO)
